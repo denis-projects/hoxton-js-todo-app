@@ -132,7 +132,42 @@ function renderIncompleteTodos() {
   for (const todo of incompleteTodos) {
     const liEl = document.createElement('li')
     liEl.setAttribute('class', 'todo')
+
+    const divTodo = document.createElement('div')
+    divTodo.setAttribute('class', 'completed-section')
+
+    const inputEl = document.createElement('input')
+    inputEl.setAttribute('type', 'checkbox')
+    inputEl.setAttribute('class', 'completed-checkbox')
+    divTodo.append(inputEl)
+
     
+    const divText = document.createElement('div')
+    divText.setAttribute('class', 'text-section' )
+
+    const pEl = document.createElement('p')
+    pEl.setAttribute('class', 'todo-text')
+    pEl.textContent = todo.text
+    divText.append(pEl)
+
+
+    const divBtn = document.createElement('div')
+    divBtn.setAttribute('class', 'button-section')
+
+    const editBtb = document.createElement('button')
+    editBtb.setAttribute('class', 'edit')
+    editBtb.textContent = "Edit"
+
+    const deleteBtn = document.createElement('button')
+    deleteBtn.setAttribute('class', 'delete')
+    deleteBtn.textContent = "Delete"
+
+    divBtn.append(editBtb, deleteBtn)
+
+
+    liEl.append(divTodo, divText, divBtn)
+
+    todoList.append(liEl)
 
     const completedCheckbox = liEl.querySelector('.completed-checkbox')
     completedCheckbox.checked = todo.completed
@@ -143,14 +178,15 @@ function renderIncompleteTodos() {
       render()
     })
 
-    todoList.append(liEl)
+    
   }
 }
 
 function render() {
   console.log(state)
-  renderCompletedTodos()
+  
   renderIncompleteTodos()
+  renderCompletedTodos()
 }
 
 render()
