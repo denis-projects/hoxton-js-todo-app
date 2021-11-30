@@ -9,24 +9,23 @@ const addTodoForm = document.querySelector('.add-item')
 const todoList = document.querySelector('.todo-list')
 const completedList = document.querySelector('.completed-list')
 
-console.log(todoList)
 
 const state = {
   todos: [
     {
-      title: 'Buy milk',
+      title: 'Eat breakfast',
       completed: false
     },
     {
-      title: 'Cook dinner',
+      title: 'Go shopping',
       completed: false
     },
     {
-      title: 'Learn JS',
+      title: 'Cook lunch',
       completed: false
     },
     {
-      title: 'YAYYYY',
+      title: 'Go to sleep',
       completed: true
     }
   ],
@@ -34,6 +33,7 @@ const state = {
 }
 
 // Functions to get derived state
+
 function getCompletedTodos() {
   return state.todos.filter(function (todo) {
     return todo.completed
@@ -56,13 +56,17 @@ function addTodo(todo) {
 
 function deleteTodo(text) {
   state.todos = state.todos.filter(function (todo) {
-    return todo.title !== text
+    return todo.text !== text
   })
 }
 
+
 function editTodo(todo, newTitle) {
-  todo.title = newTitle
+  todo.text = newText
 }
+
+
+
 
 // RENDER FUNCTIONS
 function renderCompletedTodos() {
@@ -73,18 +77,40 @@ function renderCompletedTodos() {
     const liEl = document.createElement('li')
     liEl.setAttribute('class', 'todo completed')
 
-    liEl.innerHTML = `
-       <div class="completed-section">
-         <input class="completed-checkbox" type="checkbox" />
-       </div>
-       <div class="text-section">
-         <p class="text">${todo.title}</p>
-       </div>
-       <div class="button-section">
-         <button class="edit">Edit</button>
-         <button class="delete">Delete</button>
-       </div>
-    `
+    const divTodo = document.createElement('div')
+    divTodo.setAttribute('class', 'completed-section')
+
+    const inputEl = document.createElement('input')
+    inputEl.setAttribute('type', 'checkbox')
+    inputEl.setAttribute('class', 'completed-checkbox')
+    divTodo.append(inputEl)
+
+    
+    const divText = document.createElement('div')
+    divText.setAttribute('class', 'text-section' )
+
+    const pEl = document.createElement('p')
+    pEl.setAttribute('class', 'todo-text')
+    pEl.textContent = todo.text
+    divText.append(pEl)
+
+
+    const divBtn = document.createElement('div')
+    divBtn.setAttribute('class', 'button-section')
+
+    const editBtb = document.createElement('button')
+    editBtb.setAttribute('class', 'edit')
+    editBtb.textContent = "Edit"
+
+    const deleteBtn = document.createElement('button')
+    deleteBtn.setAttribute('class', 'delete')
+    deleteBtn.textContent = "Delete"
+
+    divBtn.append(editBtb, deleteBtn)
+
+
+    liEl.append(divTodo, divText, divBtn)
+
 
     const completedCheckbox = liEl.querySelector('.completed-checkbox')
     completedCheckbox.checked = todo.completed
@@ -106,19 +132,7 @@ function renderIncompleteTodos() {
   for (const todo of incompleteTodos) {
     const liEl = document.createElement('li')
     liEl.setAttribute('class', 'todo')
-
-    liEl.innerHTML = `
-       <div class="completed-section">
-         <input class="completed-checkbox" type="checkbox" />
-       </div>
-       <div class="text-section">
-         <p class="text">${todo.title}</p>
-       </div>
-       <div class="button-section">
-         <button class="edit">Edit</button>
-         <button class="delete">Delete</button>
-       </div>
-    `
+    
 
     const completedCheckbox = liEl.querySelector('.completed-checkbox')
     completedCheckbox.checked = todo.completed
